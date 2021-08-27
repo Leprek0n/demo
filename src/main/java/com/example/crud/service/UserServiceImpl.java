@@ -3,19 +3,19 @@ package com.example.crud.service;
 import com.example.crud.model.User;
 import com.example.crud.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Collections;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserDetailsService, UserService {
+
     @Autowired
     private UserRepository userRepository;
-    @PersistenceContext
-    private EntityManager entityManager;
+
 
     public List<User> getCustomerList() {
         return userRepository.findAll();
@@ -44,6 +44,11 @@ public class UserService {
 
 
     public User getUserByName(String name) {
+        return userRepository.findByUsername(name);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         return userRepository.findByUsername(name);
     }
 }
