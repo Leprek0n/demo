@@ -12,6 +12,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/create")
+    public String addUser(Model model) {
+        model.addAttribute("user", new User());
+        return "new";
+    }
+    @PostMapping("/create")
+    public String saveCustomer(@ModelAttribute("user") User user) {
+        userService.save(user);
+        return "redirect:/list";
+    }
     @GetMapping("/list")
     public String listOfUsers(Model model) {
         model.addAttribute("list", userService.getCustomerList());
