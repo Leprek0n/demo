@@ -16,9 +16,13 @@ public class User implements UserDetails {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
+        @Column(nullable = false, length = 65)
         private String username;
+        @Column(nullable = false, length = 65)
         private String password;
+        @Column(nullable = false, length = 65)
         private String email;
+//        private String roleName;
         @ManyToMany(fetch = FetchType.EAGER)
         private Collection<Role> roles;
 

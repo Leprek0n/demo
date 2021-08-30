@@ -1,5 +1,6 @@
 package com.example.crud.controller;
 
+import com.example.crud.model.RoleName;
 import com.example.crud.model.User;
 import com.example.crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,12 @@ public class AdminController {
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
-        return "redirect:/admin/users";
+        return "redirect:/hello";
     }
 
     @PostMapping("/{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
-        userService.save(user);
+//        userService.save(user);
         return "redirect:/admin/users";
     }
 
@@ -51,9 +52,8 @@ public class AdminController {
     }
 
     @PostMapping("/create")
-    public String saveCustomer(@ModelAttribute("user") User user) {
-
-        userService.save(user);
-        return "redirect:/admin/users";
+    public String saveCustomer(@ModelAttribute("user") User user, @ModelAttribute("roleName")RoleName roleName) {
+        userService.save(user, roleName);
+        return "redirect:/hello";
     }
 }
