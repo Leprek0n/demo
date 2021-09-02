@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -24,7 +26,12 @@ public class User implements UserDetails {
         private String email;
 //        private String roleName;
         @ManyToMany(fetch = FetchType.EAGER)
-        private Collection<Role> roles;
+        @JoinTable(
+                name="users_roles",
+                joinColumns = @JoinColumn(name="user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id")
+        )
+        private Set<Role> roles = new HashSet<>();
 
         public User() {
         }
@@ -90,7 +97,10 @@ public class User implements UserDetails {
             return roles;
         }
 
-        public void setRoles(Collection<Role> roles) {
-            this.roles = roles;
-        }
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+    public void addRole(Role role) {
+            this.roles.add(role);
+    }
 }

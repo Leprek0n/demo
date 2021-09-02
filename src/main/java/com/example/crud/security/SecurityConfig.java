@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .and()
-                .logout();
+                .logout().logoutSuccessUrl("/hello");
     }
 
     @Bean
